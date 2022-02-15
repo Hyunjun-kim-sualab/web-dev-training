@@ -8,7 +8,7 @@ def get_image(db: Session, img_id: int):
 
 
 def get_images(db: Session):
-    return db.query(models.Image.id, models.Image.name).all()
+    return db.query(models.Image.id, models.Image.name, models.Image.class_name).all()
 
 
 def create_image(db: Session, img: schemas.ImageCreate):

@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { addPropertyControls, ControlType } from "framer"
 import { Props } from "framer-motion/types/types"
 
 // Welcome to Code in Framer
@@ -13,43 +12,48 @@ import { Props } from "framer-motion/types/types"
  * @framerSupportedLayoutWidth any
  * @framerSupportedLayoutHeight any
  */
-export default function Class(props: Props) {
-    const { tint, style, className } = props
-
-    const [active, setActive] = useState(false)
+export default function ClassList(props: Props) {
+    const { style, classList, currentClass, setClass } = props
 
     return (
         <motion.div style={{ ...style, ...containerStyle }}>
-            <motion.div
-                onTap={() => setActive(!active)}
-                style={{
-                    // margin: 50,
-                    padding: "5% 10% 5% 10%",
-                    borderRadius: 20,
-                    backgroundColor: tint,
-                }}
-            >
-                <motion.h2 style={{ color: "white" }}> {className} </motion.h2>
-            </motion.div>
+            {classList.map((className: string) => rowRenderer(className, buttonStyle, setClass, currentClass==className))}
         </motion.div>
     )
 }
 
-Class.defaultProps = {
+ClassList.defaultProps = {
     tint: "#09F",
     className: "Class",
 }
 
-// addPropertyControls(Class, {
-//     tint: {
-//         title: "Tint",
-//         type: ControlType.Color,
-//     },
-// })
+const rowRenderer = (className: string, style: object, handler: Function, isActive: boolean) => (
+    <motion.div
+        onTap={() => handler(className)}
+        style={{
+            ...style,
+            backgroundColor: isActive? "#0f9": "#09f"
+        }}
+        whileHover={{
+            scale: 1.1
+        }}
+    >
+        <motion.h2 style={{ color: "white" }}> {className} </motion.h2>
+    </motion.div>
+)
 
 const containerStyle = {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    width: "60%",
     // overflow: "hidden",
+}
+
+const buttonStyle = {
+    // margin: 50,
+    padding: "1% 10% 1% 10%",
+    borderRadius: 20,
+    backgroundColor: "#09f",
 }

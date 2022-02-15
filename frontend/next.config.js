@@ -9,6 +9,14 @@ const nextConfig = {
             "https://jspm.dev/",
         ],
     },
+    async rewrites() {
+        return [
+            {
+                source: '/:path*',
+                destination: 'http://10.99.5.156:8888/:path*'
+            }
+        ]
+    }
 }
 
 module.exports = nextConfig

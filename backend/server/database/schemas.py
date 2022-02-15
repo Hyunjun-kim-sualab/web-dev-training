@@ -5,12 +5,11 @@ from pydantic import BaseModel
 
 class ImageBase(BaseModel):
     name: str
-    path: str
     class_name: Optional[str]
 
 
 class ImageCreate(ImageBase):
-    pass
+    path: str
 
 class Image(ImageBase):
     id: int

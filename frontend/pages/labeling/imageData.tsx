@@ -16,41 +16,25 @@ import { Props } from "framer-motion/types/types"
  * @framerSupportedLayoutHeight any
  */
 export default function ImageData(props: Props) {
-    const { style, classList, img_path } = props
-
-    const [active, setActive] = useState(false)
+    const { style, img_id } = props
 
     return (
-        <motion.div style={{ ...style, ...containerStyle }}>
-            <ImageDisplay img_path={img_path} />
-            <motion.div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: 'space-around'
-                }}
-            >
-                {classList.map((className: string) => (
-                    <Class className={className} />
-                ))}
-            </motion.div>
+        <motion.div style={{ ...style, ...containerStyle }} className='imageData'>
+           <ImageDisplay img_path={'/image/' + img_id} />
         </motion.div>
     )
-}
-
-ImageData.defaultProps = {
-    classList: ["Dogs", "Cats"],
 }
 
 const containerStyle = {
     width: "100%",
     height: "100%",
-    "min-width": 300,
-    "min-height": 300,
+    minWidth: 300,
+    mihHeight: 300,
     // display: "flex",
+    flex: "1 0 100%"
     // "flex-direction": "column-wise",
-    justifyContent: "space-around",
-    alignItems: "center",
-    alignContents: 'center'
+    // justifyContent: "space-around",
+    // alignItems: "center",
+    // alignContents: 'center'
     // overflow: "hidden",
 }
