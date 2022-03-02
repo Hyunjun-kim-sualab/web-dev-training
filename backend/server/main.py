@@ -1,12 +1,13 @@
 from typing import List, Optional
 
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, File, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import crud, models, schemas
 from database.database import SessionLocal, ENGINE
+from image.image import Predict, predictor
 
 models.Base.metadata.create_all(bind=ENGINE)
 
@@ -61,3 +62,11 @@ def update_class(img: schemas.Image,  db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail='Class name is not in input')
     db_image = crud.update_class(db, img.id, img.class_name)
     return db_image
+
+
+@app.post("/api/predict", response_model=Predict)
+async def predict(img: UploadFile):
+    img_name = img.filename
+    content = await img.read()
+    predict = predictor.predict(img_name, content)
+    return predict
